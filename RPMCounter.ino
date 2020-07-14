@@ -1,5 +1,3 @@
-//#include <Plotter.h>
-
 
 #include <math.h>
 
@@ -66,15 +64,12 @@ int rpm_input;
 int rpm_output;
 long rpm_reg;
 int diff=0;
-//Plotter p; // create plotter
-//
-
 float A = 0;
 float B = 0.108;
 float var1 = 0;
 boolean toggle = true; // true = Enabling Serial Plotter Output
 long timeSecs;
-//
+
 
 void setup() {
   // initialize serial communication with computer:
@@ -87,35 +82,12 @@ void setup() {
   for (int thisReading = 0; thisReading < numReadings; thisReading++) {
     readings[thisReading] = 0;
      values[thisReading]=0;
-//Serial.print("timestamp ");
-//Serial.print(",");
-//Serial.print("Average ");
-//Serial.print(",");
-//Serial.print("Max ");
-//Serial.print(",");
-//Serial.print("Min");
-//Serial.println();
-     
   }
-//  p.Begin(); // start plotter
-//  
-//  p.AddTimeGraph( "RPM vs Time elapsed", 1500,"RPM", RPMfiltered ); // add any graphs you want
-
-
-  
 }
 
 
 void loop() {
 
-  
-//  minMax();
-///new addition
-  // subtract the last reading:
-//int analoginput=analogRead(inputPin);
-//int average=analogRead(inputPin);
-
-//
   filter_input = analogRead(inputPin);
 //  Serial.println(filter_input);
   filter_reg = filter_reg - (filter_reg >> FILTER_SHIFT) + filter_input;
@@ -156,11 +128,7 @@ else if((average<maxAverage)&&(minAverage==0)){
     firstMaxflag=true;
     timeStartMax=timeMax;
     minAverage=average;
-//    Serial.print("Max: ");
-//    Serial.println(maxAverage );
- 
-//    Serial.println("MaxTime:");
-//    Serial.println(timeStartMax);
+
   }
 else if((average<minAverage)&&(firstMaxflag)&&(!firstMinflag)){ 
      minAverage=average;
@@ -170,27 +138,6 @@ else if ((average>minAverage)&&(firstMaxflag)&&(!secondMaxflag )){
     secondMaxflag=true;
     timeStartMin=timeMin;
     firstMinflag=true;
-//    Serial.print("Min: ");
-//    Serial.println(minAverage );
-  
-
-
-
-//    Serial.println("MinTime:");
-//    Serial.println(timeStartMin);
-  }
-//  if(diff>5){
-//    diffflag=true;
-
-//    }
-//
-//    Serial.print(timeAverage);
-//    Serial.print(",");
-//    Serial.print(",");
-//    
-//    Serial.print(",");
-//    
-//    Serial.println();
 
   if(firstMaxflag&&firstMinflag&&secondMaxflag){
     timePeriod=timeStartMin-timeStartMax;
@@ -216,19 +163,13 @@ else if ((average>minAverage)&&(firstMaxflag)&&(!secondMaxflag )){
     rpm_reg = rpm_reg - (rpm_reg >> RPM_SHIFT) + rpm_input;
     RPMfiltered = rpm_reg >> RPM_SHIFT;
 
-//    
-//    Serial.println(timePeriod); 
-//    Serial.println("") ; 
     Serial.println(RPMfiltered);
-//     timeSecs=millis();
+
     }
-//         
-//          p.Plot();
+
          
 }
-
-
-    
+  
 }
 
 int minMax(int value){
@@ -249,67 +190,3 @@ int minMax(int value){
   average = total / numReadings; 
  return(average);
 }
-
-
-//
-//void minMax()
-//{
-//   // subtract the last reading:
-////
-////  total = total - readings[readIndex];
-//////   read from the sensor:
-//
-//  while(readIndex<numReadings){
-////       sineWave(); 
-//  readings[readIndex] = analogRead(inputPin);
-//   
-////    readings[readIndex] = var1;
-////         Serial.println(var1); 
-//  // add the reading to the total:
-////  if (readIndex==0){
-////    maxValue=readings[readIndex];
-////    minValue=readings[readIndex];
-////    }
-////  else{
-////    maxValue=max(maxValue,readings[readIndex]);
-////    minValue=min(minValue,readings[readIndex]);
-////    }  
-// 
-//  total = total + readings[readIndex];
-//  // advance to the next position in the array:
-//  readIndex = readIndex + 1;
-//  }
-//    // ...wrap around to the beginning:
-//    average = total / numReadings;
-////      Serial.println(average); 
-//    Serial.print("Average: ");
-//    Serial.println(average);
-//    timeAverage=micros();
-//    Serial.println("timeMicros: ");
-//    Serial.println(timeAverage);
-//  
-////////     delay(0.001);
-//    Serial.print("Count ");
-//    Serial.println(count);
-//    readIndex = 0;
-//    total=0;
-////  devMax=maxValue-average;
-////  devMin=average-minValue;
-//
-//}
-//
-//void sineWave(){
-//
-//      A += B;
-////  analogWrite(Output1, var1);
-////  if (toggle == true)
-////  {
-////    Serial.println(var1);
-////
-////  }
-//     if(A>=2*PI){
-//      A=0;}
-//  var1=255*sin(A);
-////  Serial.println(var1); 
-//
-//  }
